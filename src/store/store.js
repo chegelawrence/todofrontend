@@ -39,7 +39,7 @@ export const store = new Vuex.Store({
         markComplete({ commit },id){
             axios.put(`http://localhost:9000/${id}`)
             .then(res=>{
-                commit('markComplete',id)
+                commit('markComplete',res.data)
             })
             .catch(err=>console.log(err))
         }
@@ -53,8 +53,12 @@ export const store = new Vuex.Store({
         deleteTodo(state,id){
             state.todos = state.todos.filter(todo => todo.id !== id)
         },
-        markComplete(state,id){
-            console.log(state,id)
+        markComplete(state,updatedTodo){
+            //remove old todo and insert the updated todo
+            const index = state.todos.findIndex(todo => todo.id === updatedTodo.id)
+            if(index !== -1){
+                state.todos.splice(index, 1, updatedTodo)
+            }
         }
     }
 })
