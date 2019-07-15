@@ -13,41 +13,53 @@ export const store = new Vuex.Store({
     actions:{
         //all async operations  go here
         initTodos({ commit }){
-            axios.get('http://localhost:9000/')
+            axios.get('http://localhost:8081/')
             .then(res=>{
                 commit('initTodos',res.data)
-            }).catch(err=>console.log(err))
+            }).catch(err=>{
+                err
+                alert('Failed to fetch data')
+            })
         },
         addTodo({ commit },title){
-            axios.post('http://localhost:9000/',{
+            axios.post('http://localhost:8081/',{
                 title
             })
             .then(res=>{
                 commit('addTodo',res.data)
             }).
             catch(err=>{
-                console.log(err)
+                err
+                alert('Failed')
             })
         },
         deleteTodo({ commit },id){
-            axios.delete(`http://localhost:9000/${id}`)
+            axios.delete(`http://localhost:8081/${id}`)
             .then(res=>{
+                res
                 commit('deleteTodo',id)
             })
-            .catch(err=>console.log(err))
+            .catch(err=>{
+                err
+                alert('Failed')
+            })
         },
         markComplete({ commit },id){
-            axios.put(`http://localhost:9000/${id}`)
+            axios.put(`http://localhost:8081/${id}`)
             .then(res=>{
                 commit('markComplete',res.data)
             })
-            .catch(err=>console.log(err))
+            .catch(err=>{
+                err
+                alert(err)
+            })
         }
     },
     //operations that change the state of our store
     mutations:{
         initTodos(state,todos){
-            state.todos = todos
+            //display according to the newest todo
+            state.todos = todos.reverse()
         },
         addTodo:(state,todo)=>state.todos = [todo,...state.todos],
         deleteTodo(state,id){
@@ -57,6 +69,8 @@ export const store = new Vuex.Store({
             //remove old todo and insert the updated todo
             const index = state.todos.findIndex(todo => todo.id === updatedTodo.id)
             if(index !== -1){
+                //replace this todo with the updated
+                //todo from the server
                 state.todos.splice(index, 1, updatedTodo)
             }
         }

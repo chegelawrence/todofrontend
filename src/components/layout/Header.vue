@@ -4,7 +4,7 @@
             <dir class="nav-wrapper">
                 <ul id="nav-mobile" class="left">
                     <li>
-                        <router-link to="/">BOOKS</router-link>
+                        <router-link to="/">TODOS</router-link>
                     </li>
                     <li>
                         <router-link to="/add">ADD</router-link>

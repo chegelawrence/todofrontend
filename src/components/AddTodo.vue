@@ -31,8 +31,13 @@ export default {
     methods:{
         ...mapActions(['addTodo']),
         addNewTodo(title){
-            this.addTodo(title)
-            this.$router.push('/')
+            if(this.title.trim() === ''){
+                alert('Enter a title')
+            }else{
+                this.addTodo(title)
+                this.$router.push({name:'todos'})
+            }
+            
         }
     }
 }

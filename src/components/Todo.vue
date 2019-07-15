@@ -5,15 +5,22 @@
             <p>Completed: <span v-if="todo.completed == 0">False</span><span v-else>True</span></p>
         </div>
         <div class="card-footer">
-            <button class="btn-flat paper-button" @click='deleteTodo(todo.id)'>Delete</button>
-            <p style="margin-left:20px;color:blue;margin-bottom:-10px;cursor:pointer" @click=markComplete(todo.id)>Mark as <span v-if="todo.completed == 0">complete</span><span v-else>uncomplete</span></p>
+            <!--catch the deleteTodo event emitted from DeleteTodoButton  component-->
+            <delete-button :todo="todo" @deleteTodo="deleteTodo(todo.id)"></delete-button>
+            <mark-complete :todo="todo" @markComplete="markComplete(todo.id)"></mark-complete>
         </div>
     </div>
 </template>
 <script>
 import { mapActions } from 'vuex'
+import DeleteTodoButton from './DeleteTodoButton'
+import MarkComplete from './MarkComplete'
 export default {
     name:"Todo",
+    components:{
+        'delete-button':DeleteTodoButton,
+        'mark-complete':MarkComplete
+    },
     props:{
         todo:{
             required:true,
