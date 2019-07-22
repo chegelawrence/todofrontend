@@ -2,12 +2,14 @@
     <div class="card" style="border-radius:5px;">
         <div class="card-content">
             <p class="card-title" style="font-size:15px;">{{ todo.title }}</p>
-            <p>Completed: <span v-if="todo.completed == 0">False</span><span v-else>True</span></p>
+            <p>Completed: <span v-if="todo.completed === 0">False</span><span v-else>True</span></p>
         </div>
         <div class="card-footer">
             <!--catch the deleteTodo event emitted from DeleteTodoButton  component-->
             <delete-button :todo="todo" @deleteTodo="deleteTodo(todo.id)"></delete-button>
+            <!--<span class="right" id="moreBtn"><a>More</a></span>-->
             <mark-complete :todo="todo" @markComplete="markComplete(todo.id)"></mark-complete>
+            
         </div>
     </div>
 </template>
@@ -15,6 +17,7 @@
 import { mapActions } from 'vuex'
 import DeleteTodoButton from './DeleteTodoButton'
 import MarkComplete from './MarkComplete'
+import { url } from 'inspector';
 export default {
     name:"Todo",
     components:{
@@ -32,13 +35,17 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 .paper-button{
     color:#fff;
     background-color:crimson;
     text-transform:none;
     margin-bottom: 10px;
     margin-left:20px;
+}
+#moreBtn{
+    margin-right:20px;
+    cursor: pointer;
 }
 </style>
 

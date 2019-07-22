@@ -21,6 +21,9 @@ export const store = new Vuex.Store({
                 alert('Failed to fetch data')
             })
         },
+        searchTodo({ commit },title){
+            commit('searchTodo',title)
+        },
         addTodo({ commit },title){
             axios.post('http://localhost:8081/',{
                 title
@@ -53,6 +56,12 @@ export const store = new Vuex.Store({
                 err
                 alert(err)
             })
+        },
+        showComplete({ commit }){
+            commit('showComplete')
+        },
+        showUncomplete({ commit }){
+            commit('showUncomplete')
         }
     },
     //operations that change the state of our store
@@ -73,6 +82,16 @@ export const store = new Vuex.Store({
                 //todo from the server
                 state.todos.splice(index, 1, updatedTodo)
             }
+        },
+        showComplete(state){
+            state.todos = state.todos.filter(todo => todo.completed === 1)
+        },
+        showUncomplete(state){
+            state.todos = state.todos.filter(todo => todo.completed === 0)
+        },
+        searchTodo(state,title){
+            state,title
+            //search todo here
         }
     }
 })

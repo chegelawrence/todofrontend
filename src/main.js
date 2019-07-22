@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import Todos from './components/Todos'
 import AddTodo from './components/AddTodo'
+import SingleTodoDetails from './components/SingleTodoDetails'
 import VueRouter from 'vue-router'
 import { store } from './store/store'
 
@@ -18,6 +19,11 @@ const routes = [
     name:'addtodo',
     path:'/add',
     component:AddTodo
+  },
+  {
+    name:'todo',
+    path:'/todo/:id',
+    component:SingleTodoDetails
   }
 ]
 
