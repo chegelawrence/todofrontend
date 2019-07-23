@@ -3,6 +3,9 @@ import App from './App.vue'
 import Todos from './components/Todos'
 import AddTodo from './components/AddTodo'
 import SingleTodoDetails from './components/SingleTodoDetails'
+import Register from './components/auth/Register'
+import Login from './components/auth/Login'
+import Logout from './components/auth/Logout'
 import VueRouter from 'vue-router'
 import { store } from './store/store'
 
@@ -11,8 +14,23 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    name:'todos',
+    name:'login',
     path:'/',
+    component:Login
+  },
+  {
+    name:'logout',
+    path:'/logout',
+    component:Logout
+  },
+  {
+    name:'register',
+    path:'/register',
+    component:Register
+  },
+  {
+    name:'todos',
+    path:'/todos',
     component:Todos
   },
   {

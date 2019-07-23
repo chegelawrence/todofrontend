@@ -20,4 +20,7 @@ export default {
 h3{
   font-size: 18px;
 }
+input[type="text"],input[type="password"]{
+    font-family: 'Google Sans';
+}
 </style>

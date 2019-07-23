@@ -1,11 +1,10 @@
 <template>
     <div class="row">
-        <header></header>
         <div class="card" style="border-radius:5px;">
             <div class="card-content">
                 <p class="card-title" style="font-size:15px;">{{ todo.title }}</p>
                 <p>Completed: <span v-if="todo.completed === 0">False</span><span v-else>True</span></p>
-                <p>Date created: {{ todo.date_created }}</p>
+                <p>Date created: {{ todo.date_added }}</p>
             </div>
             <div class="card-footer">
                 <back-button></back-button>
@@ -15,19 +14,39 @@
 </template>
 
 <script>
-import Header from './layout/Header'
+import BackButton from './BackButton'
+import { mapGetters } from 'vuex'
 export default {
     name:'SingleTodoDetails',
     components:{
-        'header':Header
+        'back-button':BackButton
+    },
+    beforeRouteEnter(to,from,next){
+        next(vm => {
+            if(!vm.isLoggedIn){ vm.$router.replace({name: 'login'}) }
+        })
+    },
+    beforeUpdate(to,from,next){
+        this.getTodo()
     },
     data(){
         return {
             todo:{}
         }
     },
+    methods:{
+        getTodo(){
+            this.todo = this.$store.state.todos.find(todo => todo.id === parseInt(this.$route.params.id))
+        }
+    },
+    watch:{
+        '$route':'getTodo'
+    },
+    computed:{
+        ...mapGetters(['isLoggedIn'])
+    },
     created(){
-        this.todo = this.$store.state.todos.filter(todo => todo.id === parseInt(this.$route.params.id)) 
+        this.getTodo()
     }
 }
 </script>

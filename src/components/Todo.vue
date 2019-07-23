@@ -7,7 +7,7 @@
         <div class="card-footer">
             <!--catch the deleteTodo event emitted from DeleteTodoButton  component-->
             <delete-button :todo="todo" @deleteTodo="deleteTodo(todo.id)"></delete-button>
-            <!--<span class="right" id="moreBtn"><a>More</a></span>-->
+            <span class="right" id="moreBtn"><a @click="moreDetails(todo.id)">More</a></span>
             <mark-complete :todo="todo" @markComplete="markComplete(todo.id)"></mark-complete>
             
         </div>
@@ -17,7 +17,6 @@
 import { mapActions } from 'vuex'
 import DeleteTodoButton from './DeleteTodoButton'
 import MarkComplete from './MarkComplete'
-import { url } from 'inspector';
 export default {
     name:"Todo",
     components:{
@@ -31,7 +30,12 @@ export default {
         }
     },
     methods:{
-        ...mapActions(['deleteTodo','markComplete'])
+        ...mapActions(['deleteTodo','markComplete']),
+        moreDetails(id){
+            //todo id is provided as  a parameter
+            const res = `/todo/${id}`
+            this.$router.push(res)
+        }
     }
 }
 </script>

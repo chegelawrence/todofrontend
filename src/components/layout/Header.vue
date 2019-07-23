@@ -2,12 +2,24 @@
     <div>
         <nav>
             <dir class="nav-wrapper">
-                <ul id="nav-mobile" class="left">
+                <ul v-if="isLoggedIn" id="nav-mobile" class="left">
                     <li>
-                        <router-link to="/">TODOS</router-link>
+                        <router-link to="/todos">TODOS</router-link>
                     </li>
                     <li>
                         <router-link to="/add">ADD</router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{ name: 'logout' }">LOGOUT</router-link>
+                    </li>
+                    
+                </ul>
+                <ul v-else id="nav-mobile" class="left">
+                    <li>
+                        <router-link to="/register">REGISTER</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/">LOGIN</router-link>
                     </li>
                     
                 </ul>
@@ -16,8 +28,12 @@
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
-    name:"Header"
+    name:"Header",
+    computed:{
+        ...mapGetters(['isLoggedIn'])
+    }
 }
 </script>
 

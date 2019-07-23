@@ -23,10 +23,15 @@ export default {
     'filter-todos':FilterTodos,
     Header
   },
+  beforeRouteEnter(to,from,next){
+    next(vm => {
+      if(!vm.isLoggedIn){ vm.$router.replace({name:'login'})}
+    })
+  },
   methods:{
     ...mapActions(['initTodos','showComplete','showUncomplete'])
   },
-  computed:mapGetters(['allTodos']),
+  computed:mapGetters(['allTodos','isLoggedIn']),
   created(){
     this.initTodos()
   }
