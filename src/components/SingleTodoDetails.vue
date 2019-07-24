@@ -22,12 +22,13 @@ export default {
         'back-button':BackButton
     },
     beforeRouteEnter(to,from,next){
+        //go to login if user is not logged in
         next(vm => {
             if(!vm.isLoggedIn){ vm.$router.replace({name: 'login'}) }
         })
     },
     beforeUpdate(to,from,next){
-        this.getTodo()
+       this.todo = this.$store.state.todos.find(todo => todo.id === parseInt(to.params.id))
     },
     data(){
         return {

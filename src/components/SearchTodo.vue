@@ -1,5 +1,5 @@
 <template>
-    <input type="text" @keyup="searchTodo($event)" autocomplete="off" style="font-family:'Google Sans';" placeholder="Enter todo name">
+    <input type="text" @keyup="searchTodo($event)" autocomplete="off" style="font-family:'Google Sans';" placeholder="Search todo by name">
 </template>
 
 <script>

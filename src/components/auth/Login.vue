@@ -4,13 +4,13 @@
         <div class="col s12 m12 l12">
             <form @submit.prevent="tryLogin">
                 <div class="col s12 m12 l12 input-field">
-                    <label for="username">Username</label>
+                    <label for="username">Email</label>
                     <input type="text" v-model="username" autocomplete="off" id="username">
                 </div>
                 <div class="col s12 m12 l12 input-field">
                     <label for="password">Password</label>
                     <input type="password" v-model="password" autocomplete="off" id="password">
-                    <span class="error" v-show="error">Enter your account details</span>
+                    <span class="error" v-show="error">Enter correct account details</span>
                 </div>
                 <div class="col s12 m1 2l12 input-field">
                     <button type="submit" class="btn btn-flat paper-button white-text" style="background-color:blue;">Login</button>
@@ -40,7 +40,7 @@ export default {
     methods:{
         ...mapActions(['login']),
         validateForm(){
-            if(this.username.trim() === '' || this.password === ''){
+            if(this.username.trim() === '' ||this.username.trim().lastIndexOf('@') === -1 || this.username.trim().lastIndexOf('.') === -1 || this.password === ''){
                 return true
             }
             return false
@@ -50,9 +50,10 @@ export default {
                 this.error = true
             }else{
                 this.error = false
-                axios.post('http://localhost:8081/',{username:this.username,password:this.password})
+                axios.post('http://localhost:8081/',{username:this.username.trim(),password:this.password})
                 .then(res => {
                     this.login(res.data)
+                    this.username = this.password = ''
                     this.$router.replace({name:'todos'})
                 })
                 .catch(err => {

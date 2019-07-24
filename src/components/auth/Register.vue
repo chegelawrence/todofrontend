@@ -8,6 +8,10 @@
                     <input type="text" v-model="username" autocomplete="off" id="username">
                 </div>
                 <div class="col s12 m12 l12 input-field">
+                    <label for="email">Email</label>
+                    <input type="text" v-model="email" autocomplete="off" id="email">
+                </div>
+                <div class="col s12 m12 l12 input-field">
                     <label for="password">Password</label>
                     <input type="password" v-model="password" autocomplete="off" id="password">
                 </div>
@@ -35,6 +39,7 @@ export default {
     data(){
         return{
             username:'',
+            email:'',
             password:'',
             confirm_password:'',
             error:false
@@ -42,10 +47,10 @@ export default {
     },
     methods:{
         createAccount(){
-            if(this.username.trim() === '' || this.password === '' || this.confirm_password === ''){
+            if(this.username.trim() === '' || this.password === '' || this.confirm_password === '' || this.email.trim() === '' || this.email.trim().lastIndexOf('@') === -1 || this.email.trim().lastIndexOf('.') === -1){
                 this.error = true
             }else{
-                const user = {username:this.username,password:this.password,confirm_password:this.confirm_password}
+                const user = {username:this.username.trim(),email:this.email.trim(),password:this.password,confirm_password:this.confirm_password}
                 axios.post('http://localhost:8081/register',user)
                 .then(res => {
                     res

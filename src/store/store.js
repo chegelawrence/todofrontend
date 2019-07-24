@@ -123,8 +123,11 @@ export const store = new Vuex.Store({
             state.auth = access_data
         },
         destroyToken(state){
+            //destroy user access token and logout 
+            state.todos = []
+            state.auth = {}
             state.auth.logged_in = false
-            localStorage.removeItem(state.auth.access_token)
+            localStorage.removeItem('access_token')
         }
     }
 })

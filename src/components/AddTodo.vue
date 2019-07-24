@@ -17,7 +17,7 @@
 </template>
 <script>
 import Header from "./layout/Header"
-import { mapActions } from 'vuex'
+import { mapActions,mapGetters } from 'vuex'
 export default {
     name:"AddTodo",
     components:{
@@ -32,6 +32,19 @@ export default {
            }
         }
     },
+    beforeRouteEnter(to,from,next){
+    next(vm => {
+      if(!vm.isLoggedIn){ vm.$router.replace({name:'login'})}
+    })
+  },
+    beforeRouteLeave(to,from,next){
+        if(this.title.trim() !== ''){
+            const ans = window.confirm('Leave this page?Changes have not been saved')
+            if(ans){ next() }else{ next(false) }
+        }else{
+            next()
+        }
+    },
     methods:{
         ...mapActions(['addTodo']),
         addNewTodo(title){
@@ -40,6 +53,7 @@ export default {
                 this.error.msg = 'Enter a title'
             }else{
                 this.addTodo(title)
+                this.title = ''
                 this.error.isError = false
                 this.error.msg = ''
                 this.$router.push({name:'todos'})
@@ -55,6 +69,9 @@ export default {
                 this.error.msg = ''
             }
         }
+    },
+    computed:{
+        ...mapGetters(['isLoggedIn'])
     }
 }
 </script>
